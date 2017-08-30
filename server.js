@@ -4,6 +4,9 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
+// Require Articles Schema
+var Article = require("./models/Article");
+
 // Create Instance of Express
 var app = express();
 // Sets an initial port. We'll use this later in our listener
@@ -37,6 +40,17 @@ db.once("open", function() {
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 }); 
+
+app.get("/api", function(req, res) {
+  Article.find({}).exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(doc);
+    }
+  });
+});
 
 // Listener
 app.listen(PORT, function() {

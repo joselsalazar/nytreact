@@ -52,6 +52,23 @@ app.get("/api", function(req, res) {
   });
 });
 
+
+app.post("/api", function(req, res) {
+  console.log("BODY: " + req.body.location);
+
+  Article.create({
+    article: req.body.article,
+    date: Date.now()
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send("Saved Search");
+    }
+  });
+});
+
 // Listener
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
